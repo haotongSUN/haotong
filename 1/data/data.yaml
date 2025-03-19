@@ -1,0 +1,4 @@
+- method: GET
+  url: https://example.com
+- method: POST
+  url: https://example.org
