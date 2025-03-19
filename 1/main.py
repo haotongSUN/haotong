@@ -1,6 +1,7 @@
 import requests
 import logging
 import json
+import yaml
 
 # 配置日志
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -28,17 +29,21 @@ def send_request(session, method, url):
 
 
 def main():
-    # 配置请求信息
-    requests_config = [
-        {"method": "get", "url": "http://www.baidu.com/"},
-        {"method": "get", "url": "http://www.qq.com/"}
-    ]
-    session = requests.session()
-    for config in requests_config:
-        method = config["method"]
-        url = config["url"]
-        send_request(session, method, url)
-    session.close()
+    try:
+        # 读取 YAML 配置文件
+        with open('requests_config.yaml', 'r', encoding='utf-8') as file:
+            requests_config = yaml.safe_load(file)
+
+        session = requests.session()
+        for config in requests_config:
+            method = config["method"]
+            url = config["url"]
+            send_request(session, method, url)
+        session.close()
+    except FileNotFoundError:
+        logging.error("未找到 YAML 配置文件 'requests_config.yaml'。")
+    except yaml.YAMLError as yaml_error:
+        logging.error(f"解析 YAML 文件时出错: {yaml_error}")
 
 
 if __name__ == "__main__":

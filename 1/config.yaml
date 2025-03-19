@@ -1,0 +1,4 @@
+- method: get
+  url: http://www.baidu.com/
+- method: get
+  url: http://www.qq.com/
