@@ -30,8 +30,8 @@ def send_request(session, method, url):
 
 def main():
     try:
-        # 读取 YAML 配置文件
-        with open('requests_config.yaml', 'r', encoding='utf-8') as file:
+        # 修改文件路径为上级目录
+        with open('../config/config.yaml', 'r', encoding='utf-8') as file:
             requests_config = yaml.safe_load(file)
 
         session = requests.session()
@@ -41,7 +41,7 @@ def main():
             send_request(session, method, url)
         session.close()
     except FileNotFoundError:
-        logging.error("未找到 YAML 配置文件 'requests_config.yaml'。")
+        logging.error("未找到 YAML 配置文件 'config.yaml'。")
     except yaml.YAMLError as yaml_error:
         logging.error(f"解析 YAML 文件时出错: {yaml_error}")
 
